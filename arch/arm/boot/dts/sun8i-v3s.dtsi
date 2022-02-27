@@ -242,6 +242,16 @@
 				function = "uart0";
 				bias-pull-up;
 			};
+			uart1_pins_a: uart1@0 {
+				pins = "PE21", "PE22";
+				function = "uart1";
+				bias-pull-up;
+			};
+			uart2_pins_a: uart2@0 {
+				pins = "PB0", "PB1";
+				function = "uart2";
+				bias-pull-up;
+			};
 
 			mmc0_pins_a: mmc0@0 {
 				pins = "PF0", "PF1", "PF2", "PF3",
