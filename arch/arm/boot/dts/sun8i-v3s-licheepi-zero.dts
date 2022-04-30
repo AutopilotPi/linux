@@ -69,6 +69,17 @@
 	status = "okay";
 };
 
+&mmc1 {
+	pinctrl-0 = <&mmc1_pins>;
+	pinctrl-names = "default";
+	broken-cd;
+	bus-width = <4>;
+	vmmc-supply = <&reg_vcc3v3>;
+	status = "okay";
+};
+
+
+
 &i2c0 {
 	status = "okay";
 
