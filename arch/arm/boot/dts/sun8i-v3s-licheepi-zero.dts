@@ -146,4 +146,10 @@
         };
 };
 
+&ccu {
+	assigned-clocks = <&ccu 18>;
+	assigned-clock-parents = <&ccu 9>;
+	assigned-clock-rates = <60000000>;
+};
+
 
