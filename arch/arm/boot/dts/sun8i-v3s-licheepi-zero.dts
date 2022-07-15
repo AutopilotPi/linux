@@ -58,6 +58,15 @@
 	chosen {
 		stdout-path = "serial0:115200n8";
 	};
+
+	
+	pwrseq_wifi: pwrseq_wifi@0 {
+		compatible = "mmc-pwrseq-simple";
+		pinctrl-names = "default";
+		pinctrl-0 = <&wifi_rst>;
+		reset-gpios = <&pio 4 23 GPIO_ACTIVE_LOW>;
+		post-power-on-delay-ms = <50>;
+	};
 };
 
 &mmc0 {
@@ -69,13 +78,27 @@
 	status = "okay";
 };
 
+
+
 &mmc1 {
-	pinctrl-0 = <&mmc1_pins>;
 	pinctrl-names = "default";
-	broken-cd;
-	bus-width = <4>;
+	pinctrl-0 = <&mmc1_pins>;
 	vmmc-supply = <&reg_vcc3v3>;
+	bus-width = <4>;
+	mmc-pwrseq = <&pwrseq_wifi>;
+	non-removable;
 	status = "okay";
+
+        xr819wifi: xr819wifi@1 {
+                reg = <1>;
+                compatible = "xradio,xr819";
+                pinctrl-names = "default";
+                pinctrl-0 = <&wifi_wake>;
+                interrupt-parent = <&pio>;
+                interrupts = <4 24 IRQ_TYPE_EDGE_RISING>;
+                interrupt-names = "host-wake";
+                local-mac-address = [dc 44 6d c0 ff ee];
+        };
 };
 
 
@@ -119,9 +142,19 @@
 
 &pio {
         spi0_cs_pins: spi0_cs_pins {
-                pins = "PC2", "PB3";
+                pins = "PC2", "PB3","PE16","PE15";
                 function = "gpio_out";
         };
+
+		wifi_wake: wifi_wake {
+				pins = "PE24";
+				function = "gpio_in";
+    	};
+
+		wifi_rst: wifi_rst {
+				pins = "PE23";
+				function = "gpio_out";
+    };
 };
 
 &spi0 {
@@ -129,7 +162,7 @@
 
         pinctrl-names = "default";
         pinctrl-0 = <&spi0_pins &spi0_cs_pins>;
-        cs-gpios = <&pio 2 2 GPIO_ACTIVE_HIGH>, <&pio 1 3 GPIO_ACTIVE_HIGH>;
+        cs-gpios = <&pio 2 2 GPIO_ACTIVE_HIGH>, <&pio 1 3 GPIO_ACTIVE_HIGH>,<&pio 4 16 GPIO_ACTIVE_HIGH>,<&pio 4 15 GPIO_ACTIVE_HIGH>;
 
         mx25l25635e:mx25l25635e@0 {
                 compatible = "jedec,spi-nor";
@@ -142,6 +175,17 @@
         spidev:	spidevxxx@1 {
                 compatible = "rohm,dh2228fv";
                 reg = <0x1>;
+                spi-max-frequency = <5000000>;
+        };
+
+		gowin: gowin@1{
+                compatible = "rohm,dh2228fv";
+                reg = <0x2>;
+                spi-max-frequency = <5000000>;
+        };
+		fakegowin: gowin@2{
+                compatible = "rohm,dh2228fv";
+                reg = <0x3>;
                 spi-max-frequency = <5000000>;
         };
 };
