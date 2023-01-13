@@ -59,14 +59,6 @@
 		stdout-path = "serial0:115200n8";
 	};
 
-	
-	pwrseq_wifi: pwrseq_wifi@0 {
-		compatible = "mmc-pwrseq-simple";
-		pinctrl-names = "default";
-		pinctrl-0 = <&wifi_rst>;
-		reset-gpios = <&pio 4 23 GPIO_ACTIVE_LOW>;
-		post-power-on-delay-ms = <50>;
-	};
 };
 
 &mmc0 {
@@ -77,30 +69,6 @@
 	vmmc-supply = <&reg_vcc3v3>;
 	status = "okay";
 };
-
-
-
-&mmc1 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&mmc1_pins>;
-	vmmc-supply = <&reg_vcc3v3>;
-	bus-width = <4>;
-	mmc-pwrseq = <&pwrseq_wifi>;
-	non-removable;
-	status = "okay";
-
-        xr819wifi: xr819wifi@1 {
-                reg = <1>;
-                compatible = "xradio,xr819";
-                pinctrl-names = "default";
-                pinctrl-0 = <&wifi_wake>;
-                interrupt-parent = <&pio>;
-                interrupts = <4 24 IRQ_TYPE_EDGE_RISING>;
-                interrupt-names = "host-wake";
-                local-mac-address = [dc 44 6d c0 ff ee];
-        };
-};
-
 
 
 &i2c0 {
