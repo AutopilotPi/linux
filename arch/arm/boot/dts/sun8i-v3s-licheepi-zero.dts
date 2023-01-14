@@ -113,16 +113,6 @@
                 pins = "PC2", "PB3","PE16","PE15";
                 function = "gpio_out";
         };
-
-		wifi_wake: wifi_wake {
-				pins = "PE24";
-				function = "gpio_in";
-    	};
-
-		wifi_rst: wifi_rst {
-				pins = "PE23";
-				function = "gpio_out";
-    };
 };
 
 &spi0 {
