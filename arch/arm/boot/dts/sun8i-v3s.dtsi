@@ -391,6 +391,11 @@
 				function = "uart0";
 			};
 
+			uart1_pins: uart1-pins {
+				pins = "PE22", "PE21";
+				function = "uart1";
+			};
+
 			uart2_pins: uart2-pins {
 				pins = "PB0", "PB1";
 				function = "uart2";
@@ -492,6 +497,8 @@
 			dmas = <&dma 7>, <&dma 7>;
 			dma-names = "rx", "tx";
 			resets = <&ccu RST_BUS_UART1>;
+			pinctrl-0 = <&uart1_pins>;
+			pinctrl-names = "default";
 			status = "disabled";
 		};
 

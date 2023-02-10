@@ -70,13 +70,13 @@
 	status = "okay";
 };
 
-/*
+
 &uart1 {
-	pinctrl-0 = <&uart1_pins_a>;
+	pinctrl-0 = <&uart1_pins>;
 	pinctrl-names = "default";
 	status = "okay";
 };
-*/
+
 
 &uart2 {
 	pinctrl-0 = <&uart2_pins>;
@@ -115,3 +115,8 @@
         };
 };
 
+&ccu {
+	assigned-clocks = <&ccu 18>;
+	assigned-clock-parents = <&ccu 9>;
+	assigned-clock-rates = <60000000>;
+};
